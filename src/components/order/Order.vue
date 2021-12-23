@@ -37,7 +37,7 @@
         </el-table-column>
         <!-- 操作 -->
         <el-table-column label="操作">
-          <template slot-scope="scope">
+          <template>
             <!-- 修改按钮 -->
             <el-button
               type="primary"
@@ -66,7 +66,6 @@
         :page-size="queryInfo.pagesize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
-        
       >
       </el-pagination>
     </el-card>
@@ -183,5 +182,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

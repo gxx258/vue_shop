@@ -12,38 +12,45 @@
     </el-header>
     <el-container>
       <!-- 侧边栏 -->
-      <el-aside :width="isCollapse?'64px':'200px'">
+      <el-aside :width="isCollapse ? '64px' : '200px'">
         <div class="toggle-button" @click="toggleCollapse">|||</div>
         <el-menu
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#409fee"
           unique-opened
-          :collapse='isCollapse'
-          :collapse-transition='false'
+          :collapse="isCollapse"
+          :collapse-transition="false"
           router
           :default-active="activePath"
         >
-        <!-- 一级菜单中可以嵌套二级菜单 -->
-          <el-submenu :index="'/'+item.path" v-for="item in menulist" :key="item.id">
+          <!-- 一级菜单中可以嵌套二级菜单 -->
+          <el-submenu
+            :index="'/' + item.path"
+            v-for="item in menulist"
+            :key="item.id"
+          >
             <template slot="title">
               <!-- 一级菜单的图标 -->
               <i :class="iconsObj[item.id]"></i>
               <!-- 一级菜单的文本 -->
-              <span>{{item.authName}}</span>
+              <span>{{ item.authName }}</span>
             </template>
-
 
             <!-- 二级菜单 -->
-          <el-menu-item :index="'/'+item2.path" v-for="item2 in item.children"
-          :key='item2.id' @click="saveNavState('/'+item2.path)">
-            <template slot="title">
-              <!-- 二级菜单的图标 -->
-              <i class="el-icon-menu"></i>
-              <!-- 二级菜单的文本 -->
-              <span>{{item2.authName}}</span>
-            </template>
-          </el-menu-item>
+            <el-menu-item
+              :index="'/' + item2.path"
+              v-for="item2 in item.children"
+              :key="item2.id"
+              @click="saveNavState('/' + item2.path)"
+            >
+              <template slot="title">
+                <!-- 二级菜单的图标 -->
+                <i class="el-icon-menu"></i>
+                <!-- 二级菜单的文本 -->
+                <span>{{ item2.authName }}</span>
+              </template>
+            </el-menu-item>
           </el-submenu>
         </el-menu></el-aside
       >
@@ -58,24 +65,25 @@
 
 <script>
 export default {
-  data(){return{
-    // 用于接收左侧菜单数据
-    menulist:[],
-    iconsObj:{
-      '125':'iconfont icon-user',
-      '103':'iconfont icon-tijikongjian',
-      '101':'iconfont icon-3702mima',
-      '102':'iconfont icon-danju',
-      '145':'iconfont icon-baobiao',
-    },
-    isCollapse:false,
-    // 被激活的链接地址
-    activePath:''
-  }},
-  created(){
-  this.getMenuList(),
-  this.activePath=window.sessionStorage.getItem('activePath')
-
+  data() {
+    return {
+      // 用于接收左侧菜单数据
+      menulist: [],
+      iconsObj: {
+        "125": "iconfont icon-user",
+        "103": "iconfont icon-tijikongjian",
+        "101": "iconfont icon-3702mima",
+        "102": "iconfont icon-danju",
+        "145": "iconfont icon-baobiao",
+      },
+      isCollapse: false,
+      // 被激活的链接地址
+      activePath: "",
+    };
+  },
+  created() {
+    this.getMenuList(),
+      (this.activePath = window.sessionStorage.getItem("activePath"));
   },
   methods: {
     // 退出登陆
@@ -84,26 +92,26 @@ export default {
       this.$router.push("/login");
     },
     // 获取所有的菜单
-   async getMenuList(){
-      const{data:res}=await this.$http.get('menus')
-      if(res.meta.status!==200)return this.$message.error(res.meta.msg)
+    async getMenuList() {
+      const { data: res } = await this.$http.get("menus");
+      if (res.meta.status !== 200) return this.$message.error(res.meta.msg);
       // this.$message.success('获取菜单列表成功')
-      this.menulist = res.data
+      this.menulist = res.data;
     },
     // 切换侧边栏的收起与展开
-    toggleCollapse(){
-      this.isCollapse = !this.isCollapse 
+    toggleCollapse() {
+      this.isCollapse = !this.isCollapse;
     },
     // 保存链接的激活状态
-    saveNavState(activePath){
-      window.sessionStorage.setItem('activePath',activePath)
-      this.activePath=activePath
-    }
+    saveNavState(activePath) {
+      window.sessionStorage.setItem("activePath", activePath);
+      this.activePath = activePath;
+    },
   },
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .home-container {
   height: 100%;
 }
@@ -129,22 +137,22 @@ export default {
 .el-main {
   background-color: #eaedf1;
 }
-.el-menu{
+.el-menu {
   border-right: none;
 }
-.el-submenu{
-  i{
+.el-submenu {
+  i {
     margin-right: 10px;
   }
 }
-.toggle-button{
-  background-color:#4A5064;
+.toggle-button {
+  background-color: #4a5064;
   color: #fff;
   font-size: 15px;
   line-height: 24px;
   text-align: center;
   // 文字之间的空隙
-  letter-spacing:3px ;
+  letter-spacing: 3px;
   // 鼠标放上去之后变成小手
   cursor: pointer;
 }
