@@ -7,7 +7,7 @@
         <span>电商后台管理系统</span>
       </div>
       <div>
-        <el-button type="info" @click="logout"> 退出hhh </el-button>
+        <el-button type="info" @click="logout"> 退出hhedeeh </el-button>
       </div>
     </el-header>
     <el-container>
